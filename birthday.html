@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Something</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    font-family:"Quicksand",sans-serif;
+    color:#604b54;
+    background:
+        radial-gradient(circle at 15% 20%,#fff 0 8%,transparent 28%),
+        radial-gradient(circle at 85% 75%,#ffdce8 0 7%,transparent 30%),
+        linear-gradient(135deg,#fff5f8,#f8d9e5);
+}
+
+.screen{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .8s ease;
+    overflow-y:auto;
+}
+
+.screen.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.container{
+    width:min(92vw,700px);
+    text-align:center;
+}
+
+/* DECORATION */
+
+.decor{
+    position:fixed;
+    pointer-events:none;
+    z-index:1;
+    user-select:none;
+}
+
+.flower{
+    font-size:30px;
+    animation:sway 5s ease-in-out infinite;
+}
+
+.f1{top:7%;left:6%}
+.f2{top:15%;right:8%;font-size:25px;animation-delay:1s}
+.f3{bottom:13%;left:8%;font-size:27px;animation-delay:2s}
+.f4{bottom:7%;right:7%;font-size:34px;animation-delay:1.5s}
+.f5{top:45%;left:3%;font-size:21px;animation-delay:2.5s}
+.f6{top:55%;right:3%;font-size:22px;animation-delay:3s}
+
+.heart{
+    font-size:24px;
+    animation:heartFloat 4s ease-in-out infinite;
+}
+
+.h1{top:12%;left:20%}
+.h2{top:25%;right:18%;animation-delay:1s}
+.h3{bottom:25%;left:18%;animation-delay:2s}
+.h4{bottom:17%;right:20%;animation-delay:1.5s}
+
+@keyframes sway{
+    0%,100%{transform:translateY(0) rotate(-5deg)}
+    50%{transform:translateY(-9px) rotate(6deg)}
+}
+
+@keyframes heartFloat{
+    0%,100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-8px) scale(1.08)}
+}
+
+/* OPENING */
+
+.name{
+    font-family:Parisienne,cursive;
+    font-size:clamp(38px,9vw,58px);
+    color:#b8788e;
+}
+
+.title{
+    font-family:"DM Serif Display",serif;
+    font-size:clamp(43px,10vw,72px);
+    font-weight:400;
+    line-height:1.1;
+    margin:8px 0 15px;
+}
+
+.subtitle{
+    color:#927b83;
+    font-size:15px;
+    letter-spacing:1px;
+    margin-bottom:42px;
+}
+
+.main-btn,
+.more-btn{
+    padding:14px 32px;
+    border-radius:999px;
+    background:#fffafa;
+    border:1px solid #e0b0c1;
+    color:#805565;
+    font-size:13px;
+    letter-spacing:1.5px;
+    box-shadow:0 10px 30px #9e61751c;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.main-btn:active,
+.more-btn:active{
+    transform:scale(.93);
+}
+
+/* PASSWORD */
+
+.password-card{
+    width:min(90vw,430px);
+    padding:40px 27px;
+    background:#ffffffb5;
+    backdrop-filter:blur(16px);
+    border:1px solid #ffffff;
+    border-radius:30px;
+    box-shadow:0 25px 65px #a45e7922;
+    text-align:center;
+}
+
+.password-title{
+    font-family:"DM Serif Display",serif;
+    font-size:34px;
+    margin-bottom:12px;
+}
+
+.clue{
+    color:#927b83;
+    font-size:14px;
+    line-height:1.7;
+    margin-bottom:28px;
+}
+
+.inputs{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+}
+
+.date{
+    width:88px;
+    padding:14px 8px;
+    text-align:center;
+    font-size:18px;
+    border:1px solid #d9aabd;
+    border-radius:15px;
+    background:#fff;
+    color:#604b54;
+    outline:none;
+}
+
+.slash{
+    font-size:22px;
+    color:#927b83;
+}
+
+.error{
+    min-height:55px;
+    margin-top:17px;
+    color:#9a6578;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* MUSIC PAGE */
+
+.music-card{
+    width:min(90vw,500px);
+    text-align:center;
+    padding:42px 28px;
+    background:#ffffffaa;
+    backdrop-filter:blur(16px);
+    border:1px solid #ffffff;
+    border-radius:30px;
+    box-shadow:0 25px 65px #a45e7922;
+}
+
+.music-small{
+    font-size:12px;
+    letter-spacing:3px;
+    color:#a47887;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+.music-title{
+    font-family:"DM Serif Display",serif;
+    font-size:clamp(32px,7vw,45px);
+    font-weight:400;
+    line-height:1.2;
+    margin-bottom:20px;
+}
+
+.music-text{
+    color:#806c74;
+    font-size:14px;
+    line-height:1.8;
+    margin-bottom:28px;
+}
+
+.song{
+    font-family:Parisienne,cursive;
+    color:#b4778d;
+    font-size:28px;
+    margin-bottom:30px;
+}
+
+.ready{
+    margin-top:17px;
+    display:block;
+    width:100%;
+}
+
+/* ENVELOPE */
+
+.envelope-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.envelope{
+    width:min(78vw,360px);
+    aspect-ratio:1.5;
+    position:relative;
+    background:#efbdd0;
+    border-radius:9px;
+    box-shadow:0 25px 60px #96576e38;
+    cursor:pointer;
+    animation:envelopeIn 1.1s ease forwards;
+}
+
+@keyframes envelopeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.88);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.envelope:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:#e9aec3;
+    clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
+    border-radius:9px;
+}
+
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:57%;
+    background:#f5c8d7;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top;
+    transition:transform 1s ease;
+    z-index:5;
+}
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
+
+.envelope-heart{
+    position:absolute;
+    left:50%;
+    top:52%;
+    transform:translate(-50%,-50%);
+    font-size:32px;
+    color:#a9637b;
+    z-index:8;
+    transition:.4s;
+}
+
+.envelope.open .envelope-heart{
+    opacity:0;
+}
+
+/* LETTER */
+
+.letter-screen{
+    align-items:flex-start;
+    padding-top:35px;
+    padding-bottom:40px;
+}
+
+.page{
+    width:min(92vw,680px);
+    min-height:82vh;
+    background:#fff9fb;
+    border-radius:5px;
+    padding:clamp(30px,6vw,55px);
+    box-shadow:0 20px 65px #91536c24;
+    position:relative;
+    text-align:left;
+}
+
+.page:before{
+    content:"";
+    position:absolute;
+    inset:12px;
+    border:1px solid #d691a621;
+    pointer-events:none;
+}
+
+.letter-title{
+    text-align:center;
+    font-family:"DM Serif Display",serif;
+    font-size:clamp(30px,7vw,48px);
+    font-weight:400;
+    margin-bottom:30px;
+    color:#765462;
+}
+
+.intro{
+    font-family:Parisienne,cursive;
+    font-size:30px;
+    color:#b4778d;
+    margin-bottom:18px;
+}
+
+.text{
+    font-size:clamp(14px,3.8vw,17px);
+    line-height:1.9;
+    color:#634f57;
+}
+
+.text p{
+    margin-bottom:21px;
+}
+
+.button-area{
+    text-align:center;
+    margin-top:34px;
+}
+
+/* ENDING */
+
+.ending{
+    text-align:center;
+}
+
+.final-text{
+    font-family:"DM Serif Display",serif;
+    font-size:clamp(25px,6vw,40px);
+    line-height:1.5;
+    margin-bottom:22px;
+}
+
+.signature{
+    font-family:Parisienne,cursive;
+    font-size:31px;
+    color:#a96d82;
+}
+
+.final-flower{
+    margin-top:43px;
+    font-size:48px;
+    animation:flowerAppear 2s ease forwards;
+}
+
+@keyframes flowerAppear{
+    from{
+        opacity:0;
+        transform:scale(.45);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@media(max-width:480px){
+    .page{
+        padding:32px 24px;
+    }
+
+    .text{
+        line-height:1.82;
+    }
+
+    .heart{
+        opacity:.45;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BUNGA -->
+<div class="decor flower f1">🌸</div>
+<div class="decor flower f2">🌷</div>
+<div class="decor flower f3">🤍</div>
+<div class="decor flower f4">🌸</div>
+<div class="decor flower f5">🌷</div>
+<div class="decor flower f6">🤍</div>
+
+<!-- LOVE -->
+<div class="decor heart h1">♡</div>
+<div class="decor heart h2">♡</div>
+<div class="decor heart h3">♡</div>
+<div class="decor heart h4">♡</div>
+
+
+<!-- OPENING -->
+
+<section id="opening" class="screen active">
+
+    <div class="container">
+
+        <div class="name">Zaskia</div>
+
+        <h1 class="title">
+            for someone special
+        </h1>
+
+        <p class="subtitle">
+            a little something, just for you
+        </p>
+
+        <button id="begin" class="main-btn">
+            BEGIN →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PASSWORD -->
+
+<section id="password" class="screen">
+
+    <div class="password-card">
+
+        <h2 class="password-title">
+            a little secret
+        </h2>
+
+        <p class="clue">
+            your first clue is hiding in a date<br>
+            you could never forget.
+        </p>
+
+        <div class="inputs">
+
+            <input
+                id="day"
+                class="date"
+                type="tel"
+                inputmode="numeric"
+                maxlength="2"
+                placeholder="DD"
+            >
+
+            <span class="slash">/</span>
+
+            <input
+                id="month"
+                class="date"
+                type="tel"
+                inputmode="numeric"
+                maxlength="2"
+                placeholder="MM"
+            >
+
+        </div>
+
+        <button id="unlock" class="main-btn">
+            UNLOCK
+        </button>
+
+        <div id="error" class="error"></div>
+
+    </div>
+
+</section>
+
+
+<!-- MUSIC SUGGESTION -->
+
+<section id="musicPage" class="screen">
+
+    <div class="music-card">
+
+        <div class="music-small">
+            one little thing
+        </div>
+
+        <h2 class="music-title">
+            before we begin...
+        </h2>
+
+        <p class="music-text">
+            there's a little something i'd like you to hear first.
+            <br>
+            maybe this song will make the words that come next
+            feel a little different.
+        </p>
+
+        <div class="song">
+            You're Gonna Live Forever in Me
+        </div>
+
+        <button id="playSong" class="main-btn">
+            PLAY THE SONG ♫
+        </button>
+
+        <button id="ready" class="more-btn ready">
+            I'M READY →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ENVELOPE -->
+
+<section id="envelopeScreen" class="screen">
+
+    <div class="envelope-wrap">
+
+        <div id="envelope" class="envelope">
+
+            <div class="flap"></div>
+
+            <div class="envelope-heart">
+                ♡
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LETTER 1 -->
+
+<section id="letter1" class="screen letter-screen">
+
+<div class="page">
+
+    <h1 class="letter-title">
+        A Few Wishes for You
+    </h1>
+
+    <div class="intro">
+        for you,
+    </div>
+
+    <div class="text">
+
+        <p>
+            i don't want to make this just another “happy birthday”
+            message. for your birthday, i'd rather leave you with a few
+            wishes that i genuinely hope find their way to you.
+        </p>
+
+        <p>
+            semoga di umur yang baru ini, hidup membawa lebih banyak hal
+            baik ke dalam harimu. bukan berarti setiap harinya harus selalu
+            mudah, tapi semoga selalu ada sesuatu yang membuat semuanya
+            terasa sedikit lebih ringan.
+        </p>
+
+        <p>
+            semoga apa pun yang sedang kamu perjuangkan sekarang, perlahan
+            menemukan jalannya. semoga hal-hal yang kamu usahakan dalam
+            diam nggak pernah menjadi sia-sia, dan suatu hari nanti kamu
+            bisa melihat kembali semua prosesnya sambil tersenyum.
+        </p>
+
+        <p>
+            semoga kamu selalu diberi kesehatan, ketenangan, dan cukup
+            waktu untuk menikmati hal-hal kecil yang sering kali terlewat.
+            semoga kamu punya lebih banyak hari yang membuatmu tersenyum
+            tanpa alasan yang rumit.
+        </p>
+
+        <p>
+            semoga orang-orang yang datang ke dalam hidupmu adalah
+            orang-orang yang tulus. orang-orang yang menghargaimu,
+            mendukungmu, dan tetap ada bukan hanya ketika semuanya sedang
+            baik-baik saja.
+        </p>
+
+        <p>
+            dan untuk semua doa yang mungkin pernah kamu simpan sendiri,
+            semoga satu per satu menemukan waktunya untuk dikabulkan.
+            mungkin nggak selalu dengan cara yang kamu bayangkan, tapi
+            semoga akhirnya membawa kamu ke tempat yang memang baik untukmu.
+        </p>
+
+        <p>
+            di umur yang baru ini, aku cuma berharap semoga hidup
+            memperlakukanmu dengan lembut. semoga ada lebih banyak hal
+            yang bisa kamu syukuri, lebih banyak alasan untuk tersenyum,
+            dan lebih banyak momen yang suatu hari nanti akan kamu ingat
+            sebagai bagian dari hari-hari terbaikmu.
+        </p>
+
+    </div>
+
+    <div class="button-area">
+
+        <button id="more" class="more-btn">
+            THERE'S MORE →
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- LETTER 2 -->
+
+<section id="letter2" class="screen letter-screen">
+
+<div class="page">
+
+    <h1 class="letter-title">
+        Something I Never Said
+    </h1>
+
+    <div class="text">
+
+        <p>
+            after all those wishes, there's actually one more thing
+            i want to say.
+        </p>
+
+        <p>
+            mungkin kedengarannya sederhana, tapi aku benar-benar
+            bersyukur pernah mengenal kamu. dari sekian banyak orang yang
+            pernah aku temui, entah kenapa, cuma kamu yang terasa berbeda.
+            ada sesuatu tentang kamu yang sampai sekarang masih sulit aku
+            jelaskan, tapi selalu berhasil membuatmu punya tempat yang
+            berbeda di ingatanku.
+        </p>
+
+        <p>
+            aku nggak selalu punya cara yang tepat untuk mengatakan
+            hal-hal seperti ini. kadang ada banyak hal yang sebenarnya
+            ingin disampaikan, tapi akhirnya cuma tersimpan karena rasanya
+            lebih mudah diam daripada mencari kata-kata yang tepat.
+        </p>
+
+        <p>
+            tapi kalau ada satu hal yang ingin aku pastikan kamu tahu hari
+            ini, itu adalah bahwa aku selalu berharap hal-hal baik datang
+            kepadamu.
+        </p>
+
+        <p>
+            bukan karena hari ini ulang tahunmu saja, tapi karena menurutku
+            kamu memang pantas mendapatkan banyak hal baik dalam hidupmu.
+        </p>
+
+        <p>
+            kalau suatu hari kamu mengingat surat ini, aku cuma berharap
+            kamu mengingatnya sebagai sesuatu yang sederhana, tapi ditulis
+            dengan tulus.
+        </p>
+
+        <p>
+            dan mungkin, salah satunya adalah aku.
+        </p>
+
+        <p>
+            so, happy birthday, zaskia.
+        </p>
+
+        <p>
+            semoga umur yang baru ini membawa cerita-cerita baru yang lebih
+            indah, langkah-langkah yang lebih ringan, dan banyak alasan
+            untuk tetap tersenyum.
+        </p>
+
+        <p>
+            <strong>
+                happy birthday, zaskiaaaaaaa.
+            </strong>
+        </p>
+
+        <p>
+            <em>
+                i hope life is always kind to you.
+            </em>
+        </p>
+
+    </div>
+
+    <div style="text-align:center;margin-top:30px;">
+
+        <div class="signature">
+            — someone who will always wish you well
+        </div>
+
+        <div class="button-area">
+
+            <button id="finish" class="more-btn">
+                FINISH →
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ENDING -->
+
+<section id="ending" class="screen">
+
+    <div class="ending">
+
+        <div class="final-text">
+            i hope life is always kind to you.
+        </div>
+
+        <div class="signature">
+            — someone who will always wish you well
+        </div>
+
+        <div class="final-flower">
+            🌸
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+const screens = {
+    opening: document.getElementById("opening"),
+    password: document.getElementById("password"),
+    music: document.getElementById("musicPage"),
+    envelope: document.getElementById("envelopeScreen"),
+    letter1: document.getElementById("letter1"),
+    letter2: document.getElementById("letter2"),
+    ending: document.getElementById("ending")
+};
+
+function showScreen(screen){
+
+    Object.values(screens).forEach(item=>{
+        item.classList.remove("active");
+    });
+
+    screen.classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* BEGIN */
+
+document.getElementById("begin").onclick=()=>{
+
+    showScreen(screens.password);
+
+    document.getElementById("day").focus();
+
+};
+
+
+/* DAY INPUT */
+
+document.getElementById("day").oninput=function(){
+
+    if(this.value.length===2){
+        document.getElementById("month").focus();
+    }
+
+};
+
+
+/* PASSWORD */
+
+document.getElementById("unlock").onclick=()=>{
+
+    const day=document.getElementById("day").value;
+    const month=document.getElementById("month").value;
+
+    const error=document.getElementById("error");
+
+    if(day==="24" && month==="08"){
+
+        error.innerHTML="";
+
+        /* PASSWORD BENAR
+           LANGSUNG KE HALAMAN LAGU */
+
+        showScreen(screens.music);
+
+    }else{
+
+        error.innerHTML=
+        "i thought this was one date you'd never forget."+
+        "<br><span>try again.</span>";
+
+    }
+
+};
+
+
+/* ENTER */
+
+document.getElementById("month").onkeydown=e=>{
+
+    if(e.key==="Enter"){
+        document.getElementById("unlock").click();
+    }
+
+};
+
+
+/* SPOTIFY */
+
+document.getElementById("playSong").onclick=()=>{
+
+    window.open(
+        "https://open.spotify.com/track/51lPx6ZCSalL2kvSrDUyJc?si=RzuSRaIqTxy3lv-uTpss_w&utm_source=copy-link&sci=spotify%3Acard-config%3A1AWFwDtk2BukD2yoUcrUT7",
+        "_blank"
+    );
+
+};
+
+
+/* I'M READY */
+
+document.getElementById("ready").onclick=()=>{
+
+    showScreen(screens.envelope);
+
+};
+
+
+/* ENVELOPE */
+
+document.getElementById("envelope").onclick=function(){
+
+    if(this.classList.contains("open")){
+        return;
+    }
+
+    this.classList.add("open");
+
+    setTimeout(()=>{
+
+        showScreen(screens.letter1);
+
+    },1100);
+
+};
+
+
+/* LETTER 1 */
+
+document.getElementById("more").onclick=()=>{
+
+    showScreen(screens.letter2);
+
+};
+
+
+/* ENDING */
+
+document.getElementById("finish").onclick=()=>{
+
+    showScreen(screens.ending);
+
+};
+
+</script>
+
+</body>
+</html>
